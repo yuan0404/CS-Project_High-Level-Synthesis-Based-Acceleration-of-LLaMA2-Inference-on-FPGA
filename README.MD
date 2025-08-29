@@ -444,6 +444,7 @@ $ ./sdk.sh -y -d ./ -p
 
 - [Vitis-Tutorials-Vitis-Platform-Creation](https://docs.amd.com/r/2024.1-English/Vitis-Tutorials-Vitis-Platform-Creation/Customize-the-System-Design-for-Clock-and-Reset)
 - [从零开始的Vitis教程](https://www.bilibili.com/video/BV1Fv411q7EK/)
+- [從零開始的 Xilinx SoC 開發](https://ys-hayashi.me/2021/08/xilinx-soc-01/)
 
 # 2025/04/16
 
@@ -1839,3 +1840,4 @@ extern "C"
 - [海報](docs/poster.pdf)
 - [簡報](docs/presentation.pdf)
 - [影片](https://youtu.be/TFRW2Q2ucP4)
+
