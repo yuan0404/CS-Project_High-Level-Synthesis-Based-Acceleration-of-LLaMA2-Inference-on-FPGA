@@ -1,3 +1,7 @@
+# High-Level Synthesis Based Acceleration of LLaMA2 Inference on FPGA
+
+使用開源的 llama2.c 作為語言模型的程式基礎，目標利用 FPGA 加速語言模型的推論階段，將模型中計算量比較大的部分，像是矩陣乘法，利用 HLS 快速將 C/C++ 程式轉換為硬體描述，再卸載到 ZCU106  開發版上的 FPGA 部分執行，來加速基於 TinyStories 訓練的輕量級語言模型。
+
 # 2025/03/26
 
 ## Llama2.c
