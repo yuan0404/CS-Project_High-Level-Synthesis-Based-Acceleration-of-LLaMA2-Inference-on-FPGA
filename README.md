@@ -2,4 +2,5 @@
 
 ## 最終成果
 
+- [簡報](presentation.pdf)
 - [影片](https://youtu.be/TFRW2Q2ucP4)
