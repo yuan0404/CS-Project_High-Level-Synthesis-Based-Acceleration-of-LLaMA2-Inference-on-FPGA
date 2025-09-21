@@ -23,15 +23,23 @@
 在LLaMA2推論過程中，六個核心運算模組佔據主要計算資源。本研究針對這些模組利用 HLS pragma 進行陣列切分（Array Partition）、迴圈展開（Loop Unrolling）與流水線設計（Pipeline II=1）設計，提升資料存取與運算的平行度，實現完整管線化（Fully Pipelined）結構，使系統能在每個時脈週期持續處理新輸入，進一步提高整體吞吐量。此外，以下四個模組進行了額外的優化：
 
 ### 1. 矩陣乘法（Matrix Multiplication）
-雖然矩陣乘法的目標是計算左圖中 x^T∙w 的乘積，但這種運算會產生大量非連續記憶體存取，增加延遲。因此使用右圖的 w^T∙x，有效降低記憶體存取次數，大幅提升計算效率。
+雖然矩陣乘法的目標是計算左圖中 $$x^T∙w$$ 的乘積，但這種運算會產生大量非連續記憶體存取，增加延遲。因此使用右圖的 $$w^T∙x$$，有效降低記憶體存取次數，大幅提升計算效率。
 
 <img src="png/matrix.png" width="600">
 
 ### 2. 均方根層歸一化（Root Mean Square Normalization, RMSNorm）
-由於RMS計算過程中的 N 為已知常數，因此可預先計算 1/N 的值，以乘法取代原本的除法，簡化計算步驟並提升運算速度。
+由於RMS計算過程中的 $$N$$ 為已知常數，因此可預先計算 $$1/N$$ 的值，以乘法取代原本的除法，簡化計算步驟並提升運算速度。
+
+$$
+\text{RMS}(x) = \sqrt{\frac{1}{N} \sum_{i=1}^N x_i^2}
+$$
 
 ### 3. 自注意力機制（Self-Attention）
-與RMSNorm 相似，自注意力計算中的 d_k 為已知常數，因此可以預先計算 1/d_k  ，並以乘法取代除法及根號運算，以降低硬體運算負擔。
+與RMSNorm 相似，自注意力計算中的 $$d_k$$ 為已知常數，因此可以預先計算 $$1/d_k$$  ，並以乘法取代除法及根號運算，以降低硬體運算負擔。
+
+$$
+\text{AttentionScore} = \frac{QK^T}{\sqrt{d_k}}
+$$
 
 ### 4. 旋轉位置編碼（Rotary Position Embedding, RoPE） 
 將 embedding table 以及 sin/cos 查表資料預先載入 FPGA 的 BRAM，避免多次從 DRAM 存取，縮短資料傳輸延遲，提升運算速度。
